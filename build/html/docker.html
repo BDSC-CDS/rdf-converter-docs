@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Docker usage &#8212; RDF-i2b2-converter 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation of the RDF-i2b2 converter from Python source files" href="installation.html" />
+    <link rel="prev" title="Welcome to RDF-i2b2-converter’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">RDF-i2b2-converter 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="index.html" title="Welcome to RDF-i2b2-converter’s documentation!"
+             accesskey="P">previous</a> |
+          <a href="installation.html" title="Installation of the RDF-i2b2 converter from Python source files"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="docker-usage">
+<span id="docker"></span><h1>Docker usage<a class="headerlink" href="#docker-usage" title="Permalink to this headline">¶</a></h1>
+<p>The two converters are available in dedicated docker releases and work using a Docker image (either precompiled or to build locally), and a set of Makefile recipes that will help you manage the container while mounting the necessary Docker volumes. The volumes are useful to bind files (config, data source, utility, etc.) from your host to the container at startup.</p>
+<div class="section" id="ontology-converter-docker">
+<h2>Ontology converter docker<a class="headerlink" href="#ontology-converter-docker" title="Permalink to this headline">¶</a></h2>
+<p>The docker source files are available on <a class="reference external" href="https://github.com/CHUV-DS/docker-ontology-converter.git">Github (ontology converter)</a>.
+Make sure your folder structure is correct (see <a class="reference internal" href="structure.html#structure"><span class="std std-ref">the dedicated section</span></a>) and then run the desired recipe from the Makefile.</p>
+</div>
+<div class="section" id="data-converter-docker">
+<h2>Data converter docker<a class="headerlink" href="#data-converter-docker" title="Permalink to this headline">¶</a></h2>
+<p>The docker source files are available on <a class="reference external" href="https://github.com/CHUV-DS/docker-data-converter.git">Github (data converter)</a>.
+Make sure your folder structure is correct (see <a class="reference internal" href="structure.html#structure"><span class="std std-ref">the dedicated section</span></a>) and then run the desired recipe from
+the Makefile.</p>
+</div>
+<div class="section" id="installation-using-the-makefile">
+<span id="makefile"></span><h2>Installation using the Makefile<a class="headerlink" href="#installation-using-the-makefile" title="Permalink to this headline">¶</a></h2>
+<p>Requirements: gcc make. If not available, simply execute the command lines that are in the Makefile, as they are very explicit.</p>
+<p>The instructions in the Makefile will help you define the local variables pointing to your local directories.</p>
+<p>Get the docker image by running</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make build</span>
+</pre></div>
+</div>
+<p>Run the container by executing either</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make up-d</span>
+<span class="gp">#</span> Or
+<span class="go">make debug</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-fails-at-runtime">
+<h2>Common fails at runtime:<a class="headerlink" href="#common-fails-at-runtime" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pop from empty list</span>
+</pre></div>
+</div>
+<p>This one means your source RDF files were not found. Check the environment variables defined in the Makefile.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Conversion passed but consistency check were not performed due to absence of ontology tables (CONCEPT_DIMENSION and/or MODIFIER_DIMENSION in the folder)</span>
+</pre></div>
+</div>
+<p>Check the CONCEPT_DIMENSION and MODIFIER_DIMENSION (with trailing “_VERBOSE” if verbose mode) are in the destination folder. Check ( <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">head</span> <span class="pre">-1</span> <span class="pre">$file</span></code> )  the column labels are upper-case.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Docker usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ontology-converter-docker">Ontology converter docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-converter-docker">Data converter docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-using-the-makefile">Installation using the Makefile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-fails-at-runtime">Common fails at runtime:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation of the RDF-i2b2 converter from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Instructions to run the ontology converter</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="index.html" title="Welcome to RDF-i2b2-converter’s documentation!"
+              >previous</a> |
+            <a href="installation.html" title="Installation of the RDF-i2b2 converter from Python source files"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/docker.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Jules Fasquelle.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

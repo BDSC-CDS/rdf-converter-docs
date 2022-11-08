@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Fast-forward: convert RDF data samples &#8212; RDF-i2b2-converter 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fast-forward: convert a RDF ontology graph" href="run_ontology.html" />
+    <link rel="prev" title="Verbose mode explained" href="verbose.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">RDF-i2b2-converter 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="verbose.html" title="Verbose mode explained"
+             accesskey="P">previous</a> |
+          <a href="run_ontology.html" title="Fast-forward: convert a RDF ontology graph"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fast-forward-convert-rdf-data-samples">
+<span id="run-data"></span><h1>Fast-forward: convert RDF data samples<a class="headerlink" href="#fast-forward-convert-rdf-data-samples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-docker">
+<h2>Using docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h2>
+<p>Once your docker image is installed (see <a class="reference internal" href="installation.html#installation"><span class="std std-ref">the installation section</span></a>, your <a class="reference internal" href="configuration.html#configuration"><span class="std std-ref">configuration</span></a> is ready and the <a class="reference internal" href="structure.html#structure"><span class="std std-ref">I/O folders</span></a> are populated with the ontology tables, run:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">Example using a direct production run</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ls /opt/production_tables
+        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
+
+<span class="c1"># Run the converter in production mode</span>
+<span class="hll">$ make up
+</span>
+<span class="c1"># Or use $(make up-d) to avoid capturing the console</span>
+
+<span class="c1"># Check the output</span>
+$ ls /opt/production_tables
+        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
+        OBSERVATION_FACT.csv PROVIDER_DIMENSION.CSV PATIENT_DIMENSION.CSV PATIENT_MAPPING.CSV
+        VISIT_DIMENSION.CSV ENCOUNTER_MAPPING.CSV
+</pre></div>
+</div>
+</div>
+<p>And for a verbose run:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Example using a verbose run</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span># Check the I/O folders
+$ ls /opt/verbose_tables
+        MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
+$ ls /opt/production_tables
+        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
+
+# Run the converter in verbose mode
+<span class="hll">$ make verbose DEBUG_FOLDER=/opt/verbose_tables
+</span>
+$ cd /opt/verbose_tables
+$ cat logs_missing_modifiers.csv
+        ...&lt;list of data items that don&#39;t match ontology items&gt;...
+# If I&#39;m happy with this (or file doesn&#39;t exist), I can move on and use this for production
+
+<span class="hll">$ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
+</span>
+# Check the output
+$ ls /opt/production_tables
+       MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv
+       METADATA.csv TABLE_ACCESS.csv
+       OBSERVATION_FACT.csv PROVIDER_DIMENSION.CSV
+       PATIENT_DIMENSION.CSV PATIENT_MAPPING.CSV
+       VISIT_DIMENSION.CSV ENCOUNTER_MAPPING.CSV
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="from-the-source-files">
+<h2>From the source files<a class="headerlink" href="#from-the-source-files" title="Permalink to this headline">¶</a></h2>
+<p>The steps are roughly the same (here shown only for the verbose scenario). Only make sure your configuration files point to the correct folder (for this example, the <em>/opt/verbose_tables/</em> folder and have the correct value for the <em>DEBUG</em> variable (<em>True</em> for this example):</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example using a verbose run</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span># Check the I/O folders
+$ ls /opt/verbose_tables
+        MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
+$ ls /opt/production_tables
+        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv
+        METADATA.csv TABLE_ACCESS.csv
+
+# Run the converter in verbose mode
+<span class="hll">$ cd RDF-i2b2-converter
+</span>$ python3 src/main_data.py
+
+$ cd /opt/verbose_tables
+$ cat logs_missing_modifiers.csv
+        ...&lt;list of data items that don&#39;t match ontology items&gt;...
+# If I&#39;m happy with this (or file doesn&#39;t exist),
+<span class="hll"># I can move on and use this for production
+</span>
+$ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
+
+# Check the output
+$ ls /opt/production_tables
+        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv
+        METADATA.csv TABLE_ACCESS.csv
+        OBSERVATION_FACT.csv PROVIDER_DIMENSION.CSV
+        PATIENT_DIMENSION.CSV PATIENT_MAPPING.CSV
+        VISIT_DIMENSION.CSV ENCOUNTER_MAPPING.CSV
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fast-forward: convert RDF data samples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-docker">Using docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-the-source-files">From the source files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Fast-forward: convert a RDF ontology graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Usage flowchart</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="verbose.html" title="Verbose mode explained"
+              >previous</a> |
+            <a href="run_ontology.html" title="Fast-forward: convert a RDF ontology graph"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/run_data.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Jules Fasquelle.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,147 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Organization of the I/O files and folders &#8212; RDF-i2b2-converter 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Organization of the config files" href="configuration.html" />
+    <link rel="prev" title="Installation from Python source files" href="installation.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">RDF-i2b2-converter 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="installation.html" title="Installation from Python source files"
+             accesskey="P">previous</a> |
+          <a href="configuration.html" title="Organization of the config files"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="organization-of-the-i-o-files-and-folders">
+<span id="structure"></span><h1>Organization of the I/O files and folders<a class="headerlink" href="#organization-of-the-i-o-files-and-folders" title="Permalink to this headline">¶</a></h1>
+<p>The preferred approach is to have two folders, one which will be used as output for the verbose mode, and one for the production mode.
+The input (RDF graph) files should all be descendants of a unique folder. The converter will load incrementally in a single graph all .ttl files found below the starting point (exploring recursively the subfolders and following symlinks). Thus, you should remove the undesired graphs or zip them.</p>
+<p><a href="#id1"><span class="problematic" id="id2">|</span></a>— verbose folder
+|           |
+|            —- CONCEPT_DIMENSION_VERBOSE.csv
+|            —- MODIFIER_DIMENSION_VERBOSE.csv
+|            —- migrations_logs.csv
+…
+|
+<a href="#id3"><span class="problematic" id="id4">|</span></a>— output folder
+|           |
+|            —- CONCEPT_DIMENSION.csv
+|            —- MODIFIER_DIMENSION.csv
+|            —- METADATA.csv
+|            —- TABLE_ACCESS.csv
+|            —- migrations_logs.csv
+|            —- OBSERVATION_FACT.csv
+|            —- … &lt;5 other CSV tables (i2b2 star schema)&gt;
+…
+|
+<a href="#id5"><span class="problematic" id="id6">|</span></a>—   graphs
+|           |
+|            —- first cohort</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><a href="#id7"><span class="problematic" id="id8">|</span></a></div>
+<div class="line">—- data_graph_1.ttl</div>
+<div class="line">—- data_graph_1b.ttl</div>
+<div class="line">—- second cohort</div>
+<div class="line"><a href="#id9"><span class="problematic" id="id10">|</span></a></div>
+<div class="line">— &lt;…&gt;</div>
+<div class="line"><br /></div>
+<div class="line">—- any_graph.ttl</div>
+</div>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation from Python source files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Organization of the I/O files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Fast-forward: convert a RDF ontology graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Run scenario flowchart</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="installation.html" title="Installation from Python source files"
+              >previous</a> |
+            <a href="configuration.html" title="Organization of the config files"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/structure.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Jules Fasquelle.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

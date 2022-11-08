@@ -1,0 +1,123 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Installation from Python source files &#8212; RDF-i2b2-converter 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Organization of the I/O files and folders" href="structure.html" />
+    <link rel="prev" title="Docker usage" href="docker.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">RDF-i2b2-converter 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="docker.html" title="Docker usage"
+             accesskey="P">previous</a> |
+          <a href="structure.html" title="Organization of the I/O files and folders"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installation-from-python-source-files">
+<span id="installation"></span><h1>Installation from Python source files<a class="headerlink" href="#installation-from-python-source-files" title="Permalink to this headline">¶</a></h1>
+<p>This is the documentation page for the installation of the RDF-i2b2 converter <strong>from the source files</strong>. It is the recommended approach if you are a developer and you want to adapt the code to your specific RDF or output design. It is also the way to go if you do not want to use Docker or any other related system.</p>
+<p>You will need to have Python 3.7 or more recent installed, with the following dependencies:</p>
+<ul class="simple">
+<li>pandas==1.3.4</li>
+<li>rdflib==6.0.2</li>
+<li>psutil==5.9.2</li>
+</ul>
+<p>Then, you need to <strong>modify</strong> the src/utils.py file so the three variables <em>GRAPH_CONFIG</em>, <em>DATA_CONFIG</em>, <em>I2B2_MAPPING</em> match the paths to your config files. Example config files are provided in the <em>local_config_template/</em> folder at the root of the repository. To use them as is, simply change <em>/config/</em> in <em>src/utils.py</em> for “<em>local_config_templates/</em>.</p>
+<p>Details about how to modify the configuration files are described on the <a class="reference internal" href="configuration.html#configuration"><span class="std std-ref">Configuration page</span></a>.
+Also make sure the <a class="reference internal" href="structure.html#structure"><span class="std std-ref">folder structure</span></a> makes sense regarding the configuration you just defined.</p>
+<p>Then, choose to run either the <a class="reference internal" href="run_ontology.html#run-ontology"><span class="std std-ref">ontology converter</span></a> or the <a class="reference internal" href="run_data.html#run-data"><span class="std std-ref">data samples converter</span></a>. Run instructions from source files is specified on the dedicated pages.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the I/O files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Fast-forward: convert a RDF ontology graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Usage flowchart</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="docker.html" title="Docker usage"
+              >previous</a> |
+            <a href="structure.html" title="Organization of the I/O files and folders"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/installation.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Jules Fasquelle.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

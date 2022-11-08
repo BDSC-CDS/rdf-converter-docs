@@ -1,0 +1,10 @@
+.. _installation:
+
+
+This is the documentation page for the installation of the RDF-i2b2 converter **from the source files**. It is the recommended approach if you are a developer and you want to adapt the code to your specific RDF or output design. It is also the way to go if you do not want to use Docker or any other related system.
+
+You will need to have Python 3.7 or more recent installed, with the following dependencies:
+
+
+Then, you need to **modify** the src/utils.py file so the three variables GRAPH_CONFIG, DATA_CONFIG, I2B2_MAPPING match the paths to your config files. Example config files are provided in the config/ folder at the root of the repository. To use them as is, simply change */config/* for "*local_config_templates/* 
+

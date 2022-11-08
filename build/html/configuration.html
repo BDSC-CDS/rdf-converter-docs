@@ -1,0 +1,176 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Organization of the config files &#8212; RDF-i2b2-converter 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/agogo.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Verbose mode explained" href="verbose.html" />
+    <link rel="prev" title="Organization of the input/output files and folders" href="structure.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="index.html">RDF-i2b2-converter 1.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="structure.html" title="Organization of the input/output files and folders"
+             accesskey="P">previous</a> |
+          <a href="verbose.html" title="Verbose mode explained"
+             accesskey="N">next</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="organization-of-the-config-files">
+<span id="configuration"></span><h1>Organization of the config files<a class="headerlink" href="#organization-of-the-config-files" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="graph-config-json">
+<h2>graph_config.json<a class="headerlink" href="#graph-config-json" title="Permalink to this headline">¶</a></h2>
+<p>This configuration file helps piloting the RDF graphs parsing and discovery. It is used by both the ontology converter and the data converter. It defines the RDF terms to be expected in the graph, the reserved URIs, etc. It also features a lookup table for terminology RDF graphs, so they can be loaded by the ontology converter in a distinct memory slot as the main ontology graph, speeding up the computations.
+The fields are as follow:
+.. csv-table:: Field description of graph_config</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">graph_config_doc.csv</td>
+</tr>
+<tr class="field-even field"><th class="field-name">widths:</th><td class="field-body">30, 70</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="data-config-json">
+<h2>data_config.json<a class="headerlink" href="#data-config-json" title="Permalink to this headline">¶</a></h2>
+<p>This file is only used by the data converter.
+It therefore specifies a data-specific blacklist, the path to the data and dependencies graphs, and describes the mappings for RDF contextual fields that are not featured in the i2b2 ontology.
+It contains structured instructions about how these fields should be unpacked and mapped to specific table and columns of the i2b2 star schema.
+.. csv-table:: Field description of graph_config</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">data_config_doc.csv</td>
+</tr>
+<tr class="field-even field"><th class="field-name">widths:</th><td class="field-body">30, 70</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="i2b2-rdf-config-json">
+<h2>i2b2_rdf_config.json<a class="headerlink" href="#i2b2-rdf-config-json" title="Permalink to this headline">¶</a></h2>
+<p>This file describes the bindings between RDF datatypes and i2b2 table-columns, and defines additional filters for ontology elements that should or should not appear in the final ontology.
+.. csv-table:: Field description of i2b2_rdf_config</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">i2b2_config_doc.csv</td>
+</tr>
+<tr class="field-even field"><th class="field-name">widths:</th><td class="field-body">30, 70</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">1</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Table of Contents</h3>
+          <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation of the RDF-i2b2 converter from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Organization of the config files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#graph-config-json">graph_config.json</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-config-json">data_config.json</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i2b2-rdf-config-json">i2b2_rdf_config.json</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Instructions to run the ontology converter</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="structure.html" title="Organization of the input/output files and folders"
+              >previous</a> |
+            <a href="verbose.html" title="Verbose mode explained"
+              >next</a> |
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/configuration.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Jules Fasquelle.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
