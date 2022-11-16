@@ -13,5 +13,7 @@ The flowchart does not include:
 * Editing of the configuration files
 * Modifying of the environment variables
 
+                                **Start on blue!**
+
 .. raw:: html
    :file: _images/flowchart.drawio.svg

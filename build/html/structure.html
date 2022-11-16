@@ -44,41 +44,50 @@
             
   <div class="section" id="organization-of-the-i-o-files-and-folders">
 <span id="structure"></span><h1>Organization of the I/O files and folders<a class="headerlink" href="#organization-of-the-i-o-files-and-folders" title="Permalink to this headline">¶</a></h1>
-<p>The preferred approach is to have two folders, one which will be used as output for the verbose mode, and one for the production mode.
+<p><em>General information:</em></p>
+<p>Input graphs: <strong>Do NOT put any data graph in the ONTOLOGY folder, and do NOT put ontology graphs in the DATA folder.</strong> This would break the very logic of the converter, which expects a clear partition.</p>
+<p>Output folders: The preferred approach is to have two folders, one which will be used as output for the verbose mode, and one for the production mode.
 The input (RDF graph) files should all be descendants of a unique folder. The converter will load incrementally in a single graph all .ttl files found below the starting point (exploring recursively the subfolders and following symlinks). Thus, you should remove the undesired graphs or zip them.</p>
-<p><a href="#id1"><span class="problematic" id="id2">|</span></a>— verbose folder
-|           |
-|            —- CONCEPT_DIMENSION_VERBOSE.csv
-|            —- MODIFIER_DIMENSION_VERBOSE.csv
-|            —- migrations_logs.csv
-…
-|
-<a href="#id3"><span class="problematic" id="id4">|</span></a>— output folder
-|           |
-|            —- CONCEPT_DIMENSION.csv
-|            —- MODIFIER_DIMENSION.csv
-|            —- METADATA.csv
-|            —- TABLE_ACCESS.csv
-|            —- migrations_logs.csv
-|            —- OBSERVATION_FACT.csv
-|            —- … &lt;5 other CSV tables (i2b2 star schema)&gt;
-…
-|
-<a href="#id5"><span class="problematic" id="id6">|</span></a>—   graphs
-|           |
-|            —- first cohort</p>
-<blockquote>
-<div><div class="line-block">
-<div class="line"><a href="#id7"><span class="problematic" id="id8">|</span></a></div>
-<div class="line">—- data_graph_1.ttl</div>
-<div class="line">—- data_graph_1b.ttl</div>
-<div class="line">—- second cohort</div>
-<div class="line"><a href="#id9"><span class="problematic" id="id10">|</span></a></div>
-<div class="line">— &lt;…&gt;</div>
-<div class="line"><br /></div>
-<div class="line">—- any_graph.ttl</div>
+<div class="section" id="ontology-conversion-input">
+<h2>ONTOLOGY CONVERSION INPUT<a class="headerlink" href="#ontology-conversion-input" title="Permalink to this headline">¶</a></h2>
+<p>The reading of input RDF graphs (default is <em>turtle</em> format, configurable) happens recursively from the specified folders (see configuration files). If using a Docker container, take into account the volume bound to your host $(ONTOLOGY) should not contain RDF graphs but rather a <em>main_ontologies</em> folder containing RDF graphs (which can be in subfolders, this part is more flexible)</p>
+<p><strong>Folder names are configurable in</strong> <em>graph_config.json</em>. (See <a class="reference internal" href="configuration.html#configuration"><span class="std std-ref">Configuration</span></a>)</p>
+<div class="section" id="using-external-terminologies">
+<h3>Using external terminologies<a class="headerlink" href="#using-external-terminologies" title="Permalink to this headline">¶</a></h3>
+<p>Asidet to the <em>main_ontologies</em> folder, you can specify a <em>terminology</em> folder containing extra graphs such as external terminologies. You can also put them directly in your <em>main_ontologies</em> hierarchy but having them separate will improve the graph parsing resource usage.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>Do NOT put any data graph in the ONTOLOGY folder, and do NOT put ontology graphs in the DATA folder.</strong> This would break the very logic of the converter, which expects a clear partition.</p>
 </div>
-</div></blockquote>
+<div class="figure" id="id1">
+<img alt="_images/ontologygraphs_folder.drawio.svg" class="with-shadow" src="_images/ontologygraphs_folder.drawio.svg" /><p class="caption"><span class="caption-text">All RDF graphs under the <em>$(ONTOLOGY)/main_ontologies</em> will be parsed and converted into the output i2b2 ontology. The <em>external_terminologies</em> folder should be used for storing large terminologies that are complementary to the main ontology graph.</span></p>
+</div>
+</div>
+</div>
+<div class="section" id="data-conversion-input">
+<h2>DATA CONVERSION INPUT<a class="headerlink" href="#data-conversion-input" title="Permalink to this headline">¶</a></h2>
+<p>All RDF graphs under the specified folder are parsed and converted to i2b2 data records. It is possible to add an entrypoint to a terminology files for units ; it will be parsed with the data graphs.</p>
+<div class="figure" id="id2">
+<img alt="_images/datagraphs_folder.drawio.svg" class="with-shadow" src="_images/datagraphs_folder.drawio.svg" /><p class="caption"><span class="caption-text">Data graphs and unit graphs will be loaded together, the folder distinction is only for clarity. The only important thing is that no ontology graph should be present in either hierarchy.</span></p>
+</div>
+<div class="section" id="batch-conversion-for-large-4gb-datasets">
+<h3>Batch conversion for large (&gt;4GB) datasets<a class="headerlink" href="#batch-conversion-for-large-4gb-datasets" title="Permalink to this headline">¶</a></h3>
+<p>Due to the overhead of the <code class="docutils literal notranslate"><span class="pre">rdflib</span></code> Python library, it is likely that a 32-GB RAM gets overloaded when trying to convert more than ~4GB of data samples at once.
+We offer a divide-and-conquer shell script that takes <strong>patient-based</strong> partitions of the datasets and repeatedly triggers data conversions run on each batch before merging all the outputs together. Please refer to the in-file comments of the <em>converter-merger.sh</em> script present in the <a class="reference external" href="https://github.com/CHUV-DS/docker-data-converter">data converter Docker repository</a></p>
+</div>
+</div>
+<div class="section" id="output-tables">
+<h2>OUTPUT TABLES<a class="headerlink" href="#output-tables" title="Permalink to this headline">¶</a></h2>
+<p>The data converter optionally reads ontology tables for QA. For this (recommended) sanity check to be automatically performed, the converted ontology tables (in fact, only <em>CONCEPT_DIMENSION</em> and <em>MODIFIER_DIMENSION</em>) need to be present in the data converter destination folder. Details about this procedure and why we have two lookalike output folders are explained in the <a class="reference internal" href="verbose.html#verbose"><span class="std std-ref">Verbose tables page</span></a>.</p>
+<div class="figure" id="id3">
+<img alt="_images/output_folders.drawio.png" class="with-border" src="_images/output_folders.drawio.png" />
+<p class="caption"><span class="caption-text">Composition of the output folders for both converters. Black icons figure files that will be taken into account by the ontology converter if present <strong>BEFORE</strong> the run ; Red icons are outputs of the ontology converter andcan be used for quality assessment after data conversion ;  Blue icons are outputs of the data converter.</span></p>
+</div>
+<div class="admonition-loading-into-i2b2 admonition">
+<p class="first admonition-title">Loading into i2b2</p>
+<p class="last">All the CSV files of the <strong>PRODUCTION</strong> folder with upper-case names should be loaded into the i2b2 database.</p>
+</div>
+</div>
 </div>
 
 
@@ -92,7 +101,12 @@ The input (RDF graph) files should all be descendants of a unique folder. The co
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation from Python source files</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Organization of the I/O files and folders</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Organization of the I/O files and folders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ontology-conversion-input">ONTOLOGY CONVERSION INPUT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-conversion-input">DATA CONVERSION INPUT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-tables">OUTPUT TABLES</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
