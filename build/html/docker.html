@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Installation of the RDF-i2b2 converter from Python source files" href="installation.html" />
+    <link rel="next" title="Installation from Python source files" href="installation.html" />
     <link rel="prev" title="Welcome to RDF-i2b2-converter’s documentation!" href="index.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
@@ -26,7 +26,7 @@
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="index.html" title="Welcome to RDF-i2b2-converter’s documentation!"
              accesskey="P">previous</a> |
-          <a href="installation.html" title="Installation of the RDF-i2b2 converter from Python source files"
+          <a href="installation.html" title="Installation from Python source files"
              accesskey="N">next</a> |
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a>
@@ -72,12 +72,13 @@ the Makefile.</p>
 </div>
 </div>
 <div class="section" id="common-fails-at-runtime">
-<h2>Common fails at runtime:<a class="headerlink" href="#common-fails-at-runtime" title="Permalink to this headline">¶</a></h2>
+<h2>Common fails at runtime<a class="headerlink" href="#common-fails-at-runtime" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pop from empty list</span>
 </pre></div>
 </div>
 <p>This one means your source RDF files were not found. Check the environment variables defined in the Makefile.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Conversion passed but consistency check were not performed due to absence of ontology tables (CONCEPT_DIMENSION and/or MODIFIER_DIMENSION in the folder)</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Conversion passed but consistency check were not performed due to absence of ontology tables.</span>
+<span class="go">Check CONCEPT_DIMENSION and/or MODIFIER_DIMENSION are in the output folder.</span>
 </pre></div>
 </div>
 <p>Check the CONCEPT_DIMENSION and MODIFIER_DIMENSION (with trailing “_VERBOSE” if verbose mode) are in the destination folder. Check ( <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">head</span> <span class="pre">-1</span> <span class="pre">$file</span></code> )  the column labels are upper-case.</p>
@@ -97,15 +98,16 @@ the Makefile.</p>
 <li class="toctree-l2"><a class="reference internal" href="#ontology-converter-docker">Ontology converter docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-converter-docker">Data converter docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-using-the-makefile">Installation using the Makefile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#common-fails-at-runtime">Common fails at runtime:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-fails-at-runtime">Common fails at runtime</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation of the RDF-i2b2 converter from Python source files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the I/O files and folders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Instructions to run the ontology converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Fast-forward: convert a RDF ontology graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Run scenario flowchart</a></li>
 </ul>
 
           <div role="search">
@@ -128,7 +130,7 @@ the Makefile.</p>
           <div role="navigation" aria-label="related navigaton">
             <a href="index.html" title="Welcome to RDF-i2b2-converter’s documentation!"
               >previous</a> |
-            <a href="installation.html" title="Installation of the RDF-i2b2 converter from Python source files"
+            <a href="installation.html" title="Installation from Python source files"
               >next</a> |
             <a href="genindex.html" title="General Index"
               >index</a>

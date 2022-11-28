@@ -39,7 +39,7 @@ Run the container by executing either
    # Or 
    make debug
 
-Common fails at runtime:
+Common fails at runtime
 ------------------------
 .. code-block:: console
 
@@ -49,7 +49,8 @@ This one means your source RDF files were not found. Check the environment varia
 
 .. code-block:: console
 
-        Conversion passed but consistency check were not performed due to absence of ontology tables (CONCEPT_DIMENSION and/or MODIFIER_DIMENSION in the folder)
+        Conversion passed but consistency check were not performed due to absence of ontology tables.
+        Check CONCEPT_DIMENSION and/or MODIFIER_DIMENSION are in the output folder.
 
 Check the CONCEPT_DIMENSION and MODIFIER_DIMENSION (with trailing "_VERBOSE" if verbose mode) are in the destination folder. Check ( ``$ head -1 $file`` )  the column labels are upper-case.
 

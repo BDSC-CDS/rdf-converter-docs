@@ -11,8 +11,6 @@ You will need to have Python 3.7 or more recent installed, with the following de
 
 * rdflib==6.0.2
 
-* psutil==5.9.2
-
 
 Then, you need to **modify** the src/utils.py file so the three variables *GRAPH_CONFIG*, *DATA_CONFIG*, *I2B2_MAPPING* match the paths to your config files. Example config files are provided in the *local_config_template/* folder at the root of the repository. To use them as is, simply change */config/* in *src/utils.py* for "*local_config_templates/*.
 

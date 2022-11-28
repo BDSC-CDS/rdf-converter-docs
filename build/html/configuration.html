@@ -17,14 +17,14 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Verbose mode explained" href="verbose.html" />
-    <link rel="prev" title="Organization of the input/output files and folders" href="structure.html" /> 
+    <link rel="prev" title="Organization of the I/O files and folders" href="structure.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
           href="index.html">RDF-i2b2-converter 1.0 documentation</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
-          <a href="structure.html" title="Organization of the input/output files and folders"
+          <a href="structure.html" title="Organization of the I/O files and folders"
              accesskey="P">previous</a> |
           <a href="verbose.html" title="Verbose mode explained"
              accesskey="N">next</a> |
@@ -47,62 +47,98 @@
 <div class="section" id="graph-config-json">
 <h2>graph_config.json<a class="headerlink" href="#graph-config-json" title="Permalink to this headline">¶</a></h2>
 <p>This configuration file helps piloting the RDF graphs parsing and discovery. It is used by both the ontology converter and the data converter. It defines the RDF terms to be expected in the graph, the reserved URIs, etc. It also features a lookup table for terminology RDF graphs, so they can be loaded by the ontology converter in a distinct memory slot as the main ontology graph, speeding up the computations.
-The fields are as follow:
-.. csv-table:: Field description of graph_config</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
+The fields are as follow:</p>
+<table border="1" class="colwidths-given docutils" id="id1">
+<caption><span class="caption-text">Field description of graph_config</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">graph_config_doc.csv</td>
+<tr class="row-odd"><td>ONTOLOGY_GRAPHS_LOCATIONS</td>
+<td>A list of paths (absolute or relative to the code repository root) to the folders containing the main ontology graphs. All the graphs found under (recursive, following symlinks) these points will be read.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">widths:</th><td class="field-body">30, 70</td>
+<tr class="row-even"><td>RDF_FORMAT</td>
+<td>Extension of the RDF files. All formats supported by RDFLIB can be used (see <a class="reference external" href="https://rdflib.readthedocs.io/en/stable/plugin_parsers.html">https://rdflib.readthedocs.io/en/stable/plugin_parsers.html</a>). If set to ‘*’, all types are allowed. If set to one of the possible keywords (ex ‘turtle’), only this one is allowed.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">1</td>
+<tr class="row-odd"><td>PREF_LANGUAGE</td>
+<td>The tag to chose first for the label predicate. Impacts the display language of your ontology items.</td>
+</tr>
+<tr class="row-even"><td>ALLOW_MIXED_TREES</td>
+<td>Default (False) blocks subclass detection for classes having at least one DatatypeProperty or ObjectProperty. Expert use only.</td>
+</tr>
+<tr class="row-odd"><td>TERMINOLOGIES_GRAPHS</td>
+<td>A mapping (dict) between RDF prefixes and filenames (without extension). Ex: {“<a class="reference external" href="http://snomed.info/id/">http://snomed.info/id/</a>”:”snomed-ct-20220131”} means the snomed-ct-20220131.* will be loaded in memory, and accessed upon dscovery of a resource using the prefix <a class="reference external" href="http://snomed.info/id/">http://snomed.info/id/</a> in its URI. Delete the value field to avoid loading the terminology file in memory (to speed up a testing session, for example). Specifying terminology graphs in this field allows to load them in a separate Graph instance and speeds up all the computations on the RDF graph.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>uris</td>
+<td>Macrocategory for global variables that define reserved URIs in the graph to parse.</td>
+</tr>
+<tr class="row-even"><td>ROOT_URIS</td>
+<td>A list of URIs to be used as roots of the ontology. Every item in ENTRY_CONCEPTS should be a subclass of exactly one element in this list.</td>
+</tr>
+<tr class="row-odd"><td>SUBCLASS_PREDICATE_URI</td>
+<td>The subclass reserved URI. Default is rdfs:subClassOf</td>
+</tr>
+<tr class="row-even"><td>RANGE_PREDICATE_URI</td>
+<td>The range reserved URI. Default is rdfs:range</td>
+</tr>
+<tr class="row-odd"><td>TYPE_PREDICATE_URI</td>
+<td>The type reserved URI. Default is rdf:type</td>
+</tr>
+<tr class="row-even"><td>COMMENT_PREDICATE_URI</td>
+<td>The comment reserved URI. Default is rdfs:comment</td>
+</tr>
+<tr class="row-odd"><td>LABEL_PREDICATE_URI</td>
+<td>The label reserved URI. Default is rdfs:label</td>
+</tr>
+<tr class="row-even"><td>VALUESET_MARKER_URIS</td>
+<td>Allows to define a Valueset abstract class that defines if a class A (itself of type Valueset) should be substitued by a list of classes. Example: death-status is of type Class and of type Valueset. It should be interpreted as a multi-choice list (dead, alive, unknown) since in the graph, :dead, :alive, :unkown are all of type death-status.</td>
+</tr>
+<tr class="row-odd"><td>ENTRY_CONCEPTS</td>
+<td>The whitelist of top concepts to be discovered while descending from the ROOT_URIS using the SUBCLASS_PRED_URI predicate.</td>
+</tr>
+<tr class="row-even"><td>BLACKLIST</td>
+<td>A list of URIs (no matter if class URIs, predicate URIs, etc.) that should be ignored in the walk. IMPORTANT: if a predicate P maps (i.e points using the RANGE_PRED_URI) only to a classes that are part of this blacklist, the predicate P will be ignored (since it points to banned endpoints)</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </div>
 <div class="section" id="data-config-json">
 <h2>data_config.json<a class="headerlink" href="#data-config-json" title="Permalink to this headline">¶</a></h2>
 <p>This file is only used by the data converter.
 It therefore specifies a data-specific blacklist, the path to the data and dependencies graphs, and describes the mappings for RDF contextual fields that are not featured in the i2b2 ontology.
-It contains structured instructions about how these fields should be unpacked and mapped to specific table and columns of the i2b2 star schema.
-.. csv-table:: Field description of graph_config</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
+It contains structured instructions about how these fields should be unpacked and mapped to specific table and columns of the i2b2 star schema.</p>
+<table border="1" class="colwidths-given docutils" id="id2">
+<caption><span class="caption-text">Field description of graph_config</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">data_config_doc.csv</td>
-</tr>
-<tr class="field-even field"><th class="field-name">widths:</th><td class="field-body">30, 70</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">1</td>
+<tr class="row-odd"><td>variables</td>
+<td>description</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </div>
 <div class="section" id="i2b2-rdf-config-json">
 <h2>i2b2_rdf_config.json<a class="headerlink" href="#i2b2-rdf-config-json" title="Permalink to this headline">¶</a></h2>
-<p>This file describes the bindings between RDF datatypes and i2b2 table-columns, and defines additional filters for ontology elements that should or should not appear in the final ontology.
-.. csv-table:: Field description of i2b2_rdf_config</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
+<p>This file describes the bindings between RDF datatypes and i2b2 table-columns, and defines additional filters for ontology elements that should or should not appear in the final ontology.</p>
+<table border="1" class="colwidths-given docutils" id="id3">
+<caption><span class="caption-text">Field description of i2b2_rdf_config</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">file:</th><td class="field-body">i2b2_config_doc.csv</td>
-</tr>
-<tr class="field-even field"><th class="field-name">widths:</th><td class="field-body">30, 70</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">header-rows:</th><td class="field-body">1</td>
+<tr class="row-odd"><td>variable</td>
+<td>description</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </div>
 </div>
 
@@ -116,8 +152,8 @@ It contains structured instructions about how these fields should be unpacked an
           <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation of the RDF-i2b2 converter from Python source files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the I/O files and folders</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Organization of the config files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#graph-config-json">graph_config.json</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-config-json">data_config.json</a></li>
@@ -126,7 +162,8 @@ It contains structured instructions about how these fields should be unpacked an
 </li>
 <li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Instructions to run the ontology converter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Fast-forward: convert a RDF ontology graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Run scenario flowchart</a></li>
 </ul>
 
           <div role="search">
@@ -147,7 +184,7 @@ It contains structured instructions about how these fields should be unpacked an
       <div class="footer">
         <div class="left">
           <div role="navigation" aria-label="related navigaton">
-            <a href="structure.html" title="Organization of the input/output files and folders"
+            <a href="structure.html" title="Organization of the I/O files and folders"
               >previous</a> |
             <a href="verbose.html" title="Verbose mode explained"
               >next</a> |
