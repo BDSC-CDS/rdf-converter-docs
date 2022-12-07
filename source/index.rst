@@ -26,6 +26,7 @@ The main advantage of user the Docker releases is easy input/output file managem
 
 
 .. _reqs:
+
 Requirements and installation
 =============================
 
@@ -53,11 +54,11 @@ To run the source files directly, you need to have installed
 * Python >= 3.7 
 * rdflib >= 6.0.2
 * pandas >= 1.3.4
-* psutils >= 5.9.2 (for memory monitoring)
 
 In this case, follow the instructions of the :ref:`dedicated page <installation>`.
 
 .. _index_configuration:
+
 Configuration
 ==================
 The converter comes from three configuration files read by the source code. If using a container, the config directory should be mounted as a shared volume with your host (see how to do this in the :ref:`Makefile section of the Docker deployment instructions <Makefile>`).
@@ -83,3 +84,4 @@ You can also bypass the *verbose* run and issue directly your tables in producti
    flowchart
 
 * :ref:`search`
+

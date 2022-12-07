@@ -48,11 +48,11 @@
 <h2>graph_config.json<a class="headerlink" href="#graph-config-json" title="Permalink to this headline">¶</a></h2>
 <p>This configuration file helps piloting the RDF graphs parsing and discovery. It is used by both the ontology converter and the data converter. It defines the RDF terms to be expected in the graph, the reserved URIs, etc. It also features a lookup table for terminology RDF graphs, so they can be loaded by the ontology converter in a distinct memory slot as the main ontology graph, speeding up the computations.
 The fields are as follow:</p>
-<table border="1" class="colwidths-given docutils" id="id1">
+<table border="1" class="docutils" id="id1">
 <caption><span class="caption-text">Field description of graph_config</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="30%" />
-<col width="70%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>ONTOLOGY_GRAPHS_LOCATIONS</td>
@@ -101,7 +101,7 @@ The fields are as follow:</p>
 <td>The whitelist of top concepts to be discovered while descending from the ROOT_URIS using the SUBCLASS_PRED_URI predicate.</td>
 </tr>
 <tr class="row-even"><td>BLACKLIST</td>
-<td>A list of URIs (no matter if class URIs, predicate URIs, etc.) that should be ignored in the walk. IMPORTANT: if a predicate P maps (i.e points using the RANGE_PRED_URI) only to a classes that are part of this blacklist, the predicate P will be ignored (since it points to banned endpoints)</td>
+<td>A list of predicate URIs that should be ignored in the walk.</td>
 </tr>
 </tbody>
 </table>
@@ -111,15 +111,85 @@ The fields are as follow:</p>
 <p>This file is only used by the data converter.
 It therefore specifies a data-specific blacklist, the path to the data and dependencies graphs, and describes the mappings for RDF contextual fields that are not featured in the i2b2 ontology.
 It contains structured instructions about how these fields should be unpacked and mapped to specific table and columns of the i2b2 star schema.</p>
-<table border="1" class="colwidths-given docutils" id="id2">
+<table border="1" class="docutils" id="id2">
 <caption><span class="caption-text">Field description of graph_config</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="30%" />
-<col width="70%" />
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>variables</td>
-<td>description</td>
+<tr class="row-odd"><td>DATA_GRAPHS_LOCATION</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>CONTEXT_GRAPHS_LOCATION</td>
+<td>A list of paths (absolute or relative to the code repository root) to the folders containing context data graphs (typically units or providers). All the graphs found under (recursive, following symlinks) these points will be read. Make sure no ontology graph lies there!</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>MAX_BATCH_SIZE</td>
+<td>The number of concept instances to be treated at once before writing. Reduce this number for low-budget but slower computation.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>DEFAULT_DATE</td>
+<td>The default date to be written when no date was provided. Formatted like ‘2022-04-12 00:00:00’</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>data_global_uris</td>
+<td>A macrocategory for reserved URIs.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>PROVIDER_CLASS_URI</td>
+<td>The URI marking data provider information.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>TO_IGNORE</td>
+<td>A data-specific blacklist of classes, that will be appended to the original (see graph_config) BLACKLIST.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>ENTRY_DATA_CONCEPTS</td>
+<td>The classes to consider for the beginning of data exploration. Data exploration is done on this basis rather than patient-based. This should typically be a subset of the ENTRY_CONCEPTS defined in the graph_config.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>COLUMNS_MAPPING</td>
+<td>User-defined mappings from RDF data elements to i2b2 columns.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>VALUE</td>
+<td>A macrocategory for elements which value should end up either in the NVAL_NUM or TVAL_CHAR fields of the OBSERVATION_FACT columns. Each element of this category should be a dictionary implementing the ‘col’ and ‘misc’ keys.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>col</td>
+<td>The name of the OBSERVATION_FACT column to write the value into.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>misc</td>
+<td>A dictionary hardcoding values into other columns of OBSERVATION_FACT. Example: {‘VALTYPE_CD’:’N’, ‘TVAL_CHAR’:’E’}</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>transform</td>
+<td>[OPTIONAL] A list of the exact names of methods sequence to be called on the object to extract the actual value, if applicable. Example: [‘__repr__’] or [‘year’] or [‘year’, ‘__repr__’].</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>CONTEXT</td>
+<td>A macrocategory for elements defining the observation context (patient, provider, encounter, unit, date, etc.). Each element should be a dictionary with the following keys:</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>col</td>
+<td>The name of the OBSERVATION_FACT column to write the value into.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>overwrite</td>
+<td>‘True’ or ‘False’ string stating if the item should be refreshed instead of using the value of its parent. For example, one might want to have all modifier dates matching the date of the concept instance, or not. If True, will update. If False, will use the parent and ignore the current value.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>pred_to_value</td>
+<td>A list of RDF predicates to navigate to reach the actual value. This allows to easily hop through complex Patient, Provider or Encounter objects and be sure of which property defines the actual identifier.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>verbose_value</td>
+<td>[OPTIONAL] A list of RDF predicates to navigate to reach the (optional) verbose value (alternate value with more details). Some processes will look for it.</td>
 </tr>
 </tbody>
 </table>
@@ -127,18 +197,171 @@ It contains structured instructions about how these fields should be unpacked an
 <div class="section" id="i2b2-rdf-config-json">
 <h2>i2b2_rdf_config.json<a class="headerlink" href="#i2b2-rdf-config-json" title="Permalink to this headline">¶</a></h2>
 <p>This file describes the bindings between RDF datatypes and i2b2 table-columns, and defines additional filters for ontology elements that should or should not appear in the final ontology.</p>
-<table border="1" class="colwidths-given docutils" id="id3">
+<table border="1" class="docutils" id="id3">
 <caption><span class="caption-text">Field description of i2b2_rdf_config</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="30%" />
-<col width="70%" />
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td>variable</td>
-<td>description</td>
+<tr class="row-odd"><td>DEBUG</td>
+<td>If ‘True’ (string), the output of the conversion will include cleartext instead of fixed-length basecodes. This helps for data engineering and quality control. See the ‘verbose mode’ details.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>MAX_BASECODE_LENGTH</td>
+<td>Length of the basecode to be used. Default 50. We recommend not modifying it.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>OUTPUT_TABLES_LOCATION</td>
+<td>The path (relative to the root of the repository, or absolute) to which the output CSV files should be written.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>PROJECT_NAME</td>
+<td>The name of your project to be written in the tables identifiers.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>IGNORE_TERM_ID</td>
+<td>Display option. A list of terminology names (ex snomed, icd-10, etc.) for which you don’t want the items IDs to be part of the display name. (by default the display will be like ‘SNOMED 0123432-lorem ipsum’)</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>ONTOLOGY_DROP_DIC</td>
+<td>A list of classes to be ignored for i2b2-specific reasons (such as patient and encounter information which aren’t part of the ontology in the i2b2 data model). Predicates pointing to only classes which URIs are in this list will be automatically ignored in the graph discovery</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>UNDROP_LEAVES</td>
+<td>A dictionary to finely manage exceptions to the ONTOLOGY_DROP_DIC list depending on the context. Keys should be URIs specified in ONTOLOGY_DROP_DIC. Values are lists of class URIs. If one of those classes feature the dropped class as a direct child, the blaklisting is ignored. Example: I want to ban the rdfs:comment class and the rdfs:hasComment properties mapping to it, except when the said property applies to the rdfs:FreeTextConcept and rdfs:ComplicatedConcept for which it might be useful.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>DATA_LEAVES</td>
+<td>Giving identifiers for tails of the hierarchy (usually native XML types). Allows N-to-1 mapping (e.g if xls:Float and xls:double should be used equivalently)</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>EQUIVALENCES</td>
+<td>Mappings from the key defined as right-side identifiers in DATA_LEAVES, and how they translate to i2b2.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>VALUETYPE_CD</td>
+<td>The i2b2 single-character defining the type of value (‘T’ for textual, ‘N’ for numerical)</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>C_METADATAXML</td>
+<td>A configuration binding a specific type to its appropriate representation in the i2b2 XML pop-up (see the XML_PATTERN variable below).</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>Datatype (example of C_METADATAXML tag), possible values are Integer, PosInteger, Float, PosFloat, String, etc.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>MIGRATIONS</td>
+<td>A macrocategory defining how to aggregate ontology elements. See the admonition below this table for more details on how to use it.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>concept</td>
+<td>The concept to which the modifier to relocate is bound.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>destination</td>
+<td>The list of destination modifiers (as shortened paths) into which the details of the deleted element will be merged. ‘.’ points to the concept element itself, ‘item1/*’ points to all children of ‘item1’.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>xmlvaluetype</td>
+<td>The Datatype to be written (by default it will be imported from the deleted element but overwriting is allowed). Must be compatible with the C_METADATAXML panel.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>newvisualattribute</td>
+<td>The new display icon code (by example a item with no siblings could be merged into its parent: the parent shouldn’t be  displayed as a folder anymore). i2b2 display codes are defined here: <a class="reference external" href="https://community.i2b2.org/wiki/display/ServerSideDesign/C_VISUALATTRIBUTES">https://community.i2b2.org/wiki/display/ServerSideDesign/C_VISUALATTRIBUTES</a></td>
+</tr>
+<tr class="row-odd"><td>XML_PATTERN</td>
+<td>The default XML coding for the pop-up window bound to specific ontology items (will pop for text and numeric values). The details of its fields can be found in <a class="reference external" href="https://lcbru-trac.rcs.le.ac.uk/wiki/i2b2%20Ontology%20c_metadataxml%20Column">https://lcbru-trac.rcs.le.ac.uk/wiki/i2b2%20Ontology%20c_metadataxml%20Column</a></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>COLUMNS</td>
+<td>A macrocategory for the i2b2 tables to be generated and their (oredered) columns. The default value of every column is null.</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>CONCEPT_DIMENSION</td>
+<td>The ordered column names for the CONCEPT_DIMENSION table.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>MODIFIER_DIMENSION</td>
+<td>id.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>METADATA</td>
+<td>id.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>TABLE_ACCESS</td>
+<td>id.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>OBSERVATION_FACT</td>
+<td>id.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>VISIT_DIMENSION</td>
+<td>id.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>ENCOUNTER_MAPPING</td>
+<td>id.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>PATIENT_DIMENSION</td>
+<td>id.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>PATIENT_MAPPING</td>
+<td>id.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>PROVIDER_DIMENSION</td>
+<td>id.</td>
 </tr>
 </tbody>
 </table>
+<div class="section" id="explanation-of-the-migrate-reduce-option">
+<h3>Explanation of the migrate-reduce option<a class="headerlink" href="#explanation-of-the-migrate-reduce-option" title="Permalink to this headline">¶</a></h3>
+<p>Use example:</p>
+<div class="highlight-JSON notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;MIGRATIONS&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;myprefix:LabTestValue&quot;</span><span class="p">:{</span>
+        <span class="nt">&quot;concept&quot;</span><span class="p">:</span> <span class="s2">&quot;myprefix:LabResult&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;destination&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;myprefix:hasLabResultLabTestCode/\*&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;xmlvaluetype&quot;</span><span class="p">:</span> <span class="s2">&quot;Float&quot;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-ontology-items-fine-grained-relocation admonition">
+<p class="first admonition-title">Ontology items fine-grained relocation</p>
+<blockquote>
+<div>The most complex item of this configuration file is the list of instructions for <em>element migration/aggregation</em>. It is useful when an ontology item <em>A</em> should be moved to another location in the ontology tree, or which properties should be merged into one or more other items <em>B_i</em>. For example, one could want an <em>SubjectAge</em> concept to be flagged as a numeric item, but following strictly the RDF input would maybe lead to the <em>SubjectAge</em> concept having a child element <em>AgeValue</em> flagged as a numeric item. In this case, one would fill in the instructions for migrating <em>AgeValue</em> into <em>SubjectAge</em>. For a laboratory result, one could want the laboratory test codes to carry the numeric value instead of having a distinct <em>LabResultValue</em> element, which makes sense in RDF but not in i2b2 (a single item can carry more information).</div></blockquote>
+<p class="last">The same kind of manipulation is done by default on the <em>datetime</em> and <em>units</em> elements, since i2b2 allows an ontology item to carry both its identifier, a date, a value and a unit if necessary. We use a naive approach for the <em>datetime</em> and <em>unit</em>, applying them to the direct parent (which will then make it trickle down to its other children). Such an approach doesn’t make sense for numerical values, hence the present instructions to configure aggregations.</p>
+</div>
+<p>Example of reduction:</p>
+<div class="figure" id="id4">
+<img alt="_images/migrations_example.drawio.svg" class="with-border" src="_images/migrations_example.drawio.svg" /><p class="caption"><span class="caption-text">While the RDF graph features 1-dimensional objects, i2b2 can deal with more complex objects. Automatic aggregation of several RDF properties into a single i2b2 element is limited. The top element shows the original RDF graph, the left element shows the output of a naive conversion and the right element shows the result of a better reduction, making full use of the ‘unit’ and ‘value’ fields of i2b2 items.</span></p>
+</div>
+<p>Another example of reduction:</p>
+<div class="figure" id="id5">
+<img alt="_images/migrations_age.drawio.svg" class="with-border" src="_images/migrations_age.drawio.svg" /><p class="caption"><span class="caption-text">The aggregation-migration system can also allow you to reduce unnecessarily complex hierarchies into a parent element.</span></p>
+</div>
+</div>
 </div>
 </div>
 

@@ -57,7 +57,7 @@ The main advantage of user the Docker releases is easy input/output file managem
 </ol>
 </div>
 <div class="section" id="requirements-and-installation">
-<h1>Requirements and installation<a class="headerlink" href="#requirements-and-installation" title="Permalink to this headline">¶</a></h1>
+<span id="reqs"></span><h1>Requirements and installation<a class="headerlink" href="#requirements-and-installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="using-docker">
 <h2>Using Docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/CHUV-DS/docker-ontology-converter">Repository for the ontology converter (Docker)</a></p>
@@ -76,13 +76,12 @@ Then, please follow the instructions in the <a class="reference internal" href="
 <li>Python &gt;= 3.7</li>
 <li>rdflib &gt;= 6.0.2</li>
 <li>pandas &gt;= 1.3.4</li>
-<li>psutils &gt;= 5.9.2 (for memory monitoring)</li>
 </ul>
 <p>In this case, follow the instructions of the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">dedicated page</span></a>.</p>
 </div>
 </div>
 <div class="section" id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<span id="index-configuration"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
 <p>The converter comes from three configuration files read by the source code. If using a container, the config directory should be mounted as a shared volume with your host (see how to do this in the <a class="reference internal" href="docker.html#makefile"><span class="std std-ref">Makefile section of the Docker deployment instructions</span></a>).
 All the details about every configuration file are described on <a class="reference internal" href="configuration.html#configuration"><span class="std std-ref">this page</span></a>, either for ontology or data conversion.</p>
 </div>
