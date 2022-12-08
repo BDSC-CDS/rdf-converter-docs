@@ -131,63 +131,59 @@ It contains structured instructions about how these fields should be unpacked an
 <td>The number of concept instances to be treated at once before writing. Reduce this number for low-budget but slower computation.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>DEFAULT_DATE</td>
-<td>The default date to be written when no date was provided. Formatted like ‘2022-04-12 00:00:00’</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td>data_global_uris</td>
+<tr class="row-even"><td>data_global_uris</td>
 <td>A macrocategory for reserved URIs.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>PROVIDER_CLASS_URI</td>
+<tr class="row-odd"><td>PROVIDER_CLASS_URI</td>
 <td>The URI marking data provider information.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>TO_IGNORE</td>
+<tr class="row-even"><td>TO_IGNORE</td>
 <td>A data-specific blacklist of classes, that will be appended to the original (see graph_config) BLACKLIST.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>ENTRY_DATA_CONCEPTS</td>
+<tr class="row-odd"><td>ENTRY_DATA_CONCEPTS</td>
 <td>The classes to consider for the beginning of data exploration. Data exploration is done on this basis rather than patient-based. This should typically be a subset of the ENTRY_CONCEPTS defined in the graph_config.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>COLUMNS_MAPPING</td>
+<tr class="row-even"><td>COLUMNS_MAPPING</td>
 <td>User-defined mappings from RDF data elements to i2b2 columns.</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>VALUE</td>
 <td>A macrocategory for elements which value should end up either in the NVAL_NUM or TVAL_CHAR fields of the OBSERVATION_FACT columns. Each element of this category should be a dictionary implementing the ‘col’ and ‘misc’ keys.</td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>col</td>
 <td>The name of the OBSERVATION_FACT column to write the value into.</td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>misc</td>
 <td>A dictionary hardcoding values into other columns of OBSERVATION_FACT. Example: {‘VALTYPE_CD’:’N’, ‘TVAL_CHAR’:’E’}</td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>transform</td>
 <td>[OPTIONAL] A list of the exact names of methods sequence to be called on the object to extract the actual value, if applicable. Example: [‘__repr__’] or [‘year’] or [‘year’, ‘__repr__’].</td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>CONTEXT</td>
 <td>A macrocategory for elements defining the observation context (patient, provider, encounter, unit, date, etc.). Each element should be a dictionary with the following keys:</td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>col</td>
 <td>The name of the OBSERVATION_FACT column to write the value into.</td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>overwrite</td>
 <td>‘True’ or ‘False’ string stating if the item should be refreshed instead of using the value of its parent. For example, one might want to have all modifier dates matching the date of the concept instance, or not. If True, will update. If False, will use the parent and ignore the current value.</td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
+<tr class="row-even"><td>&#160;</td>
 <td>pred_to_value</td>
 <td>A list of RDF predicates to navigate to reach the actual value. This allows to easily hop through complex Patient, Provider or Encounter objects and be sure of which property defines the actual identifier.</td>
 </tr>
-<tr class="row-even"><td>&#160;</td>
+<tr class="row-odd"><td>&#160;</td>
 <td>verbose_value</td>
 <td>[OPTIONAL] A list of RDF predicates to navigate to reach the (optional) verbose value (alternate value with more details). Some processes will look for it.</td>
 </tr>
