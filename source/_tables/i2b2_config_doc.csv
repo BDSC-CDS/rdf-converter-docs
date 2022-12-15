@@ -1,0 +1,31 @@
+DEBUG,"If 'True' (string), the output of the conversion will include cleartext instead of fixed-length basecodes. This helps for data engineering and quality control. See the 'verbose mode' details.",
+MAX_BASECODE_LENGTH,Length of the basecode to be used. Default 50. We recommend not modifying it.,
+OUTPUT_TABLES_LOCATION,"The path (relative to the root of the repository, or absolute) to which the output CSV files should be written.",
+PROJECT_NAME,The name of your project to be written in the tables identifiers.,
+IGNORE_TERM_ID,"Display option. A list of terminology names (ex snomed, icd-10, etc.) for which you don't want the items IDs to be part of the display name. (by default the display will be like 'SNOMED 0123432-lorem ipsum')",
+ONTOLOGY_DROP_DIC,"A list of classes to be ignored for i2b2-specific reasons (such as patient and encounter information which aren't part of the ontology in the i2b2 data model). Predicates pointing to only classes which URIs are in this list will be automatically ignored in the graph discovery",
+UNDROP_LEAVES,"A dictionary to finely manage exceptions to the ONTOLOGY_DROP_DIC list depending on the context. Keys should be URIs specified in ONTOLOGY_DROP_DIC. Values are lists of class URIs. If one of those classes feature the dropped class as a direct child, the blaklisting is ignored. Example: I want to ban the rdfs:comment class and the rdfs:hasComment properties mapping to it, except when the said property applies to the rdfs:FreeTextConcept and rdfs:ComplicatedConcept for which it might be useful.",
+DATA_LEAVES,Giving identifiers for tails of the hierarchy (usually native XML types). Allows N-to-1 mapping (e.g if xls:Float and xls:double should be used equivalently),
+EQUIVALENCES,"Mappings from the key defined as right-side identifiers in DATA_LEAVES, and how they translate to i2b2.",
+,VALUETYPE_CD,"The i2b2 single-character defining the type of value ('T' for textual, 'N' for numerical)"
+,C_METADATAXML, A configuration binding a specific type to its appropriate representation in the i2b2 XML pop-up (see the XML_PATTERN variable below). 
+,,"Datatype (example of C_METADATAXML tag), possible values are Integer, PosInteger, Float, PosFloat, String, etc."
+,,
+MIGRATIONS,A macrocategory defining how to aggregate ontology elements. See the admonition below this table for more details on how to use it.,
+,concept,The concept to which the modifier to relocate is bound.
+,destination,"The list of destination modifiers (as shortened paths) into which the details of the deleted element will be merged. '.' points to the concept element itself, 'item1/\*' points to all children of 'item1'."
+,xmlvaluetype,The Datatype to be written (by default it will be imported from the deleted element but overwriting is allowed). Must be compatible with the C_METADATAXML panel.
+,newvisualattribute,"The new display icon code (by example a item with no siblings could be merged into its parent: the parent shouldn't be  displayed as a folder anymore). i2b2 display codes are defined here: https://community.i2b2.org/wiki/display/ServerSideDesign/C_VISUALATTRIBUTES"
+XML_PATTERN,"The default XML coding for the pop-up window bound to specific ontology items (will pop for text and numeric values). The details of its fields can be found in https://lcbru-trac.rcs.le.ac.uk/wiki/i2b2%20Ontology%20c_metadataxml%20Column",
+,,
+COLUMNS,A macrocategory for the i2b2 tables to be generated and their (oredered) columns. The default value of every column is null.,
+,CONCEPT_DIMENSION,The ordered column names for the CONCEPT_DIMENSION table.
+,MODIFIER_DIMENSION,id.
+,METADATA,id.
+,TABLE_ACCESS,id.
+,OBSERVATION_FACT,id.
+,VISIT_DIMENSION,id.
+,ENCOUNTER_MAPPING,id.
+,PATIENT_DIMENSION,id.
+,PATIENT_MAPPING,id.
+,PROVIDER_DIMENSION,id.

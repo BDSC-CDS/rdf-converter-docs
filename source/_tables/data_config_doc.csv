@@ -1,0 +1,17 @@
+DATA_GRAPHS_LOCATION,,
+CONTEXT_GRAPHS_LOCATION,"A list of paths (absolute or relative to the code repository root) to the folders containing context data graphs (typically units or providers). All the graphs found under (recursive, following symlinks) these points will be read. Make sure no ontology graph lies there!",
+MAX_BATCH_SIZE,The number of concept instances to be treated at once before writing. Reduce this number for low-budget but slower computation.,
+data_global_uris,A macrocategory for reserved URIs.,
+PROVIDER_CLASS_URI,The URI marking data provider information.,
+TO_IGNORE,"A data-specific blacklist of classes, that will be appended to the original (see graph_config) BLACKLIST.",
+ENTRY_DATA_CONCEPTS,The classes to consider for the beginning of data exploration. Data exploration is done on this basis rather than patient-based. This should typically be a subset of the ENTRY_CONCEPTS defined in the graph_config.,
+COLUMNS_MAPPING,User-defined mappings from RDF data elements to i2b2 columns.,
+,VALUE,A macrocategory for elements which value should end up either in the NVAL_NUM or TVAL_CHAR fields of the OBSERVATION_FACT columns. Each element of this category should be a dictionary implementing the 'col' and 'misc' keys.
+    ,col,The name of the OBSERVATION_FACT column to write the value into.
+    ,misc,"A dictionary hardcoding values into other columns of OBSERVATION_FACT. Example: {'VALTYPE_CD':'N', 'TVAL_CHAR':'E'}"
+    ,transform,"[OPTIONAL] A list of the exact names of methods sequence to be called on the object to extract the actual value, if applicable. Example: ['__repr__'] or ['year'] or ['year', '__repr__']."
+,CONTEXT,"A macrocategory for elements defining the observation context (patient, provider, encounter, unit, date, etc.). Each element should be a dictionary with the following keys:"
+        ,col,The name of the OBSERVATION_FACT column to write the value into.
+        ,overwrite,"'True' or 'False' string stating if the item should be refreshed instead of using the value of its parent. For example, one might want to have all modifier dates matching the date of the concept instance, or not. If True, will update. If False, will use the parent and ignore the current value."
+        ,pred_to_value,"A list of RDF predicates to navigate to reach the actual value. This allows to easily hop through complex Patient, Provider or Encounter objects and be sure of which property defines the actual identifier."
+        ,verbose_value,[OPTIONAL] A list of RDF predicates to navigate to reach the (optional) verbose value (alternate value with more details). Some processes will look for it.
