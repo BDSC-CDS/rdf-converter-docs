@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Usage flowchart" href="flowchart.html" />
+    <link rel="next" title="Run scenario flowchart" href="flowchart.html" />
     <link rel="prev" title="Fast-forward: convert RDF data samples" href="run_data.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
@@ -26,7 +26,7 @@
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="run_data.html" title="Fast-forward: convert RDF data samples"
              accesskey="P">previous</a> |
-          <a href="flowchart.html" title="Usage flowchart"
+          <a href="flowchart.html" title="Run scenario flowchart"
              accesskey="N">next</a> |
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a>
@@ -44,6 +44,15 @@
             
   <div class="section" id="fast-forward-convert-a-rdf-ontology-graph">
 <span id="run-ontology"></span><h1>Fast-forward: convert a RDF ontology graph<a class="headerlink" href="#fast-forward-convert-a-rdf-ontology-graph" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>The main requirements for an ontology to be converted in the current version are:</p>
+<ol class="last arabic simple">
+<li>The ontology graph contains NO CYCLES (navigating with the subclass/domain/range properties should not allow to come back to the same point)</li>
+<li>All classes on which a property applies are EXPLICITLY listed in this property’s domain.</li>
+<li>No class has both subclasses and properties (no class is both an object for subclassOf and domain predicates)</li>
+</ol>
+</div>
 <div class="section" id="using-docker">
 <h2>Using Docker<a class="headerlink" href="#using-docker" title="Permalink to this headline">¶</a></h2>
 <p>Once your docker image is installed (see <a class="reference internal" href="installation.html#installation"><span class="std std-ref">the installation section</span></a>, your <a class="reference internal" href="configuration.html#configuration"><span class="std std-ref">configuration</span></a> is ready and the <a class="reference internal" href="structure.html#structure"><span class="std std-ref">I/O folders</span></a> are created and populated by optional instruction files:</p>
@@ -98,8 +107,8 @@ $ ls /opt/verbose_tables
           <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Python source files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the I/O files and folders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
 <li class="toctree-l1"><a class="reference internal" href="run_data.html">Fast-forward: convert RDF data samples</a></li>
@@ -108,7 +117,7 @@ $ ls /opt/verbose_tables
 <li class="toctree-l2"><a class="reference internal" href="#from-the-source-files">From the source files</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Usage flowchart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Run scenario flowchart</a></li>
 </ul>
 
           <div role="search">
@@ -131,7 +140,7 @@ $ ls /opt/verbose_tables
           <div role="navigation" aria-label="related navigaton">
             <a href="run_data.html" title="Fast-forward: convert RDF data samples"
               >previous</a> |
-            <a href="flowchart.html" title="Usage flowchart"
+            <a href="flowchart.html" title="Run scenario flowchart"
               >next</a> |
             <a href="genindex.html" title="General Index"
               >index</a>

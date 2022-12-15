@@ -2,6 +2,15 @@
 
 Fast-forward: convert a RDF ontology graph
 ===========================================
+.. important::
+
+        The main requirements for an ontology to be converted in the current version are:
+        
+        1. The ontology graph contains NO CYCLES (navigating with the subclass/domain/range properties should not allow to come back to the same point) 
+        
+        2. All classes on which a property applies are EXPLICITLY listed in this property's domain.
+                   
+        3. No class has both subclasses and properties (no class is both an object for subclassOf and domain predicates)
 
 Using Docker
 --------------
