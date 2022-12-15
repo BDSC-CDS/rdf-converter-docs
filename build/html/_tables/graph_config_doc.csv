@@ -1,0 +1,16 @@
+ONTOLOGY_GRAPHS_LOCATIONS,"A list of paths (absolute or relative to the code repository root) to the folders containing the main ontology graphs. All the graphs found under (recursive, following symlinks) these points will be read."
+RDF_FORMAT,"Extension of the RDF files. All formats supported by RDFLIB can be used (see https://rdflib.readthedocs.io/en/stable/plugin_parsers.html). If set to ‘*’, all types are allowed. If set to one of the possible keywords (ex ‘turtle’), only this one is allowed."
+PREF_LANGUAGE,The tag to chose first for the label predicate. Impacts the display language of your ontology items.
+ALLOW_MIXED_TREES,Default (False) blocks subclass detection for classes having at least one DatatypeProperty or ObjectProperty. Expert use only.
+TERMINOLOGIES_GRAPHS,"A mapping (dict) between RDF prefixes and filenames (without extension). Ex: {""http://snomed.info/id/"":""snomed-ct-20220131""} means the snomed-ct-20220131.* will be loaded in memory, and accessed upon dscovery of a resource using the prefix http://snomed.info/id/ in its URI. Delete the value field to avoid loading the terminology file in memory (to speed up a testing session, for example). Specifying terminology graphs in this field allows to load them in a separate Graph instance and speeds up all the computations on the RDF graph."
+,
+uris,Macrocategory for global variables that define reserved URIs in the graph to parse.
+ROOT_URIS,A list of URIs to be used as roots of the ontology. Every item in ENTRY_CONCEPTS should be a subclass of exactly one element in this list. 
+SUBCLASS_PREDICATE_URI,The subclass reserved URI. Default is rdfs:subClassOf
+RANGE_PREDICATE_URI,The range reserved URI. Default is rdfs:range
+TYPE_PREDICATE_URI,The type reserved URI. Default is rdf:type
+COMMENT_PREDICATE_URI,The comment reserved URI. Default is rdfs:comment
+LABEL_PREDICATE_URI,The label reserved URI. Default is rdfs:label
+VALUESET_MARKER_URIS,"Allows to define a Valueset abstract class that defines if a class A (itself of type Valueset) should be substitued by a list of classes. Example: death-status is of type Class and of type Valueset. It should be interpreted as a multi-choice list (dead, alive, unknown) since in the graph, :dead, :alive, :unkown are all of type death-status."
+ENTRY_CONCEPTS,The whitelist of top concepts to be discovered while descending from the ROOT_URIS using the SUBCLASS_PRED_URI predicate.
+BLACKLIST,A list of predicate URIs that should be ignored in the walk. 
