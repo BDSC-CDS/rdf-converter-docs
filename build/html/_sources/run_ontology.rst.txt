@@ -15,7 +15,7 @@ Fast-forward: convert a RDF ontology graph
 Using Docker
 --------------
 
-Once your docker image is installed (see :ref:`the installation section <installation>`, your :ref:`configuration <configuration>` is ready and the :ref:`I/O folders <structure>` are created and populated by optional instruction files:
+Once your docker image is installed (see :ref:`the docker building section <docker>`, your :ref:`configuration <configuration>` is ready and the :ref:`I/O folders <structure>` are created and populated by optional instruction files:
 
 .. code-block:: shell
    :caption: Example using a direct production run
