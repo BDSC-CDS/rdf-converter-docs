@@ -8,6 +8,7 @@ ENTRY_DATA_CONCEPTS,The classes to consider for the beginning of data exploratio
 COLUMNS_MAPPING,User-defined mappings from RDF data elements to i2b2 columns.,
 ,VALUE,A macrocategory for elements which value should end up either in the NVAL_NUM or TVAL_CHAR fields of the OBSERVATION_FACT columns. Each element of this category should be a dictionary implementing the 'col' and 'misc' keys.
     ,col,The name of the OBSERVATION_FACT column to write the value into.
+    ,mandatory,"[OPTIONAL] A flag stating if this element is necessary ('True') for the observation to make sense. By default, a patient identifier is mandatory, but an encounter ID isn't."
     ,misc,"A dictionary hardcoding values into other columns of OBSERVATION_FACT. Example: {'VALTYPE_CD':'N', 'TVAL_CHAR':'E'}"
     ,transform,"[OPTIONAL] A list of the exact names of methods sequence to be called on the object to extract the actual value, if applicable. Example: ['__repr__'] or ['year'] or ['year', '__repr__']."
 ,CONTEXT,"A macrocategory for elements defining the observation context (patient, provider, encounter, unit, date, etc.). Each element should be a dictionary with the following keys:"
