@@ -27,7 +27,9 @@ Once your docker image is installed (see :ref:`the installation section <install
            OBSERVATION_FACT.csv PROVIDER_DIMENSION.CSV PATIENT_DIMENSION.CSV PATIENT_MAPPING.CSV
            VISIT_DIMENSION.CSV ENCOUNTER_MAPPING.CSV
 
+
 And for a verbose run:
+
 
 .. code-block:: shell
    :caption: Example using a verbose run
@@ -35,16 +37,16 @@ And for a verbose run:
         
    # Check the I/O folders
    $ ls /opt/verbose_tables 
-           MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
+          MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
    $ ls /opt/production_tables
-           MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
+          MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
 
    # Run the converter in verbose mode
    $ make verbose DEBUG_FOLDER=/opt/verbose_tables
 
    $ cd /opt/verbose_tables
    $ cat logs_missing_modifiers.csv
-           ...<list of data items that don't match ontology items>...
+          # Prints list of data items that don't match ontology items
    # If I'm happy with this (or file doesn't exist), I can move on and use this for production
 
    $ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
@@ -64,7 +66,7 @@ The steps are roughly the same (here shown only for the verbose scenario). Only 
 
 .. code-block:: shell
    :caption: Example using a verbose run
-   :emphasize-lines: 9,16   
+   :emphasize-lines: 10,17   
 
    # Check the I/O folders
    $ ls /opt/verbose_tables
@@ -79,9 +81,8 @@ The steps are roughly the same (here shown only for the verbose scenario). Only 
 
    $ cd /opt/verbose_tables
    $ cat logs_missing_modifiers.csv
-           ...<list of data items that don't match ontology items>...
-   # If I'm happy with this (or file doesn't exist), 
-   # I can move on and use this for production
+           # Prints list of data items that don't match ontology items
+   # If I'm happy with this (or file doesn't exist), I can move on and use this for production
 
    $ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
 

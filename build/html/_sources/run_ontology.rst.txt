@@ -57,3 +57,25 @@ Once your docker image is installed (see :ref:`the docker building section <dock
 
 From the source files
 -----------------------
+**Check the src/utils.py file points to the correct configuration files.**
+
+Then steps are here shown only for the verbose scenario (production one is the same, with DEBUG set to False in the configuration). Make sure your configuration files point to the correct folder (for this example, the /opt/verbose_tables/ folder) and have the correct value for the DEBUG variable (True for this example):
+
+.. code-block:: shell
+   :caption: Example using a verbose run
+   :emphasize-lines: 7 
+
+   # Check the I/O folders
+   $ ls /opt/verbose_tables
+          lookup_units.csv 
+
+   # Run the converter in verbose mode
+   $ cd RDF-i2b2-converter
+   $ python3 src/main_ontology.py
+   
+   # Check the output
+   $ ls /opt/verbose_tables
+           MODIFIER_DIMENSION_VERBOSE.csv CONCEPT_DIMENSION_VERBOSE.csv 
+           METADATA.csv TABLE_ACCESS.csv 
+           lookup_units.csv (migrations_logs.csv)
+

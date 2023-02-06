@@ -68,23 +68,23 @@ $ ls /opt/production_tables
 <p>And for a verbose run:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
 <div class="code-block-caption"><span class="caption-text">Example using a verbose run</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span># Check the I/O folders
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the I/O folders</span>
 $ ls /opt/verbose_tables
-        MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
+       MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
 $ ls /opt/production_tables
-        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
+       MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv METADATA.csv TABLE_ACCESS.csv
 
-# Run the converter in verbose mode
-<span class="hll">$ make verbose DEBUG_FOLDER=/opt/verbose_tables
+<span class="c1"># Run the converter in verbose mode</span>
+<span class="hll">$ make verbose <span class="nv">DEBUG_FOLDER</span><span class="o">=</span>/opt/verbose_tables
 </span>
-$ cd /opt/verbose_tables
+$ <span class="nb">cd</span> /opt/verbose_tables
 $ cat logs_missing_modifiers.csv
-        ...&lt;list of data items that don&#39;t match ontology items&gt;...
-# If I&#39;m happy with this (or file doesn&#39;t exist), I can move on and use this for production
+       <span class="c1"># Prints list of data items that don&#39;t match ontology items</span>
+<span class="c1"># If I&#39;m happy with this (or file doesn&#39;t exist), I can move on and use this for production</span>
 
 <span class="hll">$ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
 </span>
-# Check the output
+<span class="c1"># Check the output</span>
 $ ls /opt/production_tables
        MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv
        METADATA.csv TABLE_ACCESS.csv
@@ -100,26 +100,25 @@ $ ls /opt/production_tables
 <p>The steps are roughly the same (here shown only for the verbose scenario). Only make sure your configuration files point to the correct folder (for this example, the <em>/opt/verbose_tables/</em> folder and have the correct value for the <em>DEBUG</em> variable (<em>True</em> for this example):</p>
 <div class="literal-block-wrapper docutils container" id="id3">
 <div class="code-block-caption"><span class="caption-text">Example using a verbose run</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span># Check the I/O folders
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the I/O folders</span>
 $ ls /opt/verbose_tables
         MODIFIER_DIMENSION_DEBUG.csv CONCEPT_DIMENSION_DEBUG.csv
 $ ls /opt/production_tables
         MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv
         METADATA.csv TABLE_ACCESS.csv
 
-# Run the converter in verbose mode
-<span class="hll">$ cd RDF-i2b2-converter
-</span>$ python3 src/main_data.py
-
-$ cd /opt/verbose_tables
-$ cat logs_missing_modifiers.csv
-        ...&lt;list of data items that don&#39;t match ontology items&gt;...
-# If I&#39;m happy with this (or file doesn&#39;t exist),
-<span class="hll"># I can move on and use this for production
+<span class="c1"># Run the converter in verbose mode</span>
+$ <span class="nb">cd</span> RDF-i2b2-converter
+<span class="hll">$ python3 src/main_data.py
 </span>
-$ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
+$ <span class="nb">cd</span> /opt/verbose_tables
+$ cat logs_missing_modifiers.csv
+        <span class="c1"># Prints list of data items that don&#39;t match ontology items</span>
+<span class="c1"># If I&#39;m happy with this (or file doesn&#39;t exist), I can move on and use this for production</span>
 
-# Check the output
+<span class="hll">$ bash postprod.bash -verboseF /opt/verbose_tables -outputF /opt/production_tables
+</span>
+<span class="c1"># Check the output</span>
 $ ls /opt/production_tables
         MODIFIER_DIMENSION.csv CONCEPT_DIMENSION.csv
         METADATA.csv TABLE_ACCESS.csv
@@ -142,8 +141,8 @@ $ ls /opt/production_tables
           <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="docker.html">Docker usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Python source files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the input/output files and folders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation from Python source files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Organization of the I/O files and folders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Organization of the config files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="verbose.html">Verbose mode explained</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Fast-forward: convert RDF data samples</a><ul>
@@ -152,7 +151,7 @@ $ ls /opt/production_tables
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="run_ontology.html">Fast-forward: convert a RDF ontology graph</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Usage flowchart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flowchart.html">Run scenario flowchart</a></li>
 </ul>
 
           <div role="search">

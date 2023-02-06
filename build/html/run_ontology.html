@@ -94,6 +94,26 @@ $ ls /opt/verbose_tables
 </div>
 <div class="section" id="from-the-source-files">
 <h2>From the source files<a class="headerlink" href="#from-the-source-files" title="Permalink to this headline">¶</a></h2>
+<p><strong>Check the src/utils.py file points to the correct configuration files.</strong></p>
+<p>Then steps are here shown only for the verbose scenario (production one is the same, with DEBUG set to False in the configuration). Make sure your configuration files point to the correct folder (for this example, the /opt/verbose_tables/ folder) and have the correct value for the DEBUG variable (True for this example):</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example using a verbose run</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the I/O folders</span>
+$ ls /opt/verbose_tables
+       lookup_units.csv
+
+<span class="c1"># Run the converter in verbose mode</span>
+$ <span class="nb">cd</span> RDF-i2b2-converter
+<span class="hll">$ python3 src/main_ontology.py
+</span>
+<span class="c1"># Check the output</span>
+$ ls /opt/verbose_tables
+        MODIFIER_DIMENSION_VERBOSE.csv CONCEPT_DIMENSION_VERBOSE.csv
+        METADATA.csv TABLE_ACCESS.csv
+        lookup_units.csv <span class="o">(</span>migrations_logs.csv<span class="o">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
